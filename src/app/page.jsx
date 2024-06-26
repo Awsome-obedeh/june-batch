@@ -10,6 +10,7 @@ export default  function Home() {
   const [phone,setPhone]=useState('')
   const [isChehcked,setIsChecked]=useState(false);
   const [err,setErr]=useState(false)
+  const [loading,setLoading]=useState(false)
 
   const port='3000'
   const handleSubmit=async (e)=>{
@@ -25,8 +26,10 @@ export default  function Home() {
       setErr('provide password')
     }
     else{
+      // set loading to true 
+      setLoading(true)
       // pass form data to api
-      const res= await fetch(`http://localhost:3000/register`,{
+      const res= await fetch(`http://localhost:3000/api/register`,{
         method:"POST",
         headers:{
           "Content-Type":"application/json"
@@ -34,6 +37,8 @@ export default  function Home() {
         body:JSON.stringify({email,password,phone,name})
       }
      )
+     console.log("thi is the post ", )
+      return res.json()
     }
   }
 
@@ -79,7 +84,9 @@ export default  function Home() {
     </div>
     <label for="remember" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember me</label>
   </div>
-  <input type="submit" className="text-white bg-purple-700 hover:bg-purple-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"/>
+  <button type="submit" className="text-white bg-purple-700 hover:bg-purple-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+    {loading ? 'loading...' : 'submit'}
+    </button>
 </form>
 {
   email
