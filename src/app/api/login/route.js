@@ -12,11 +12,16 @@ export const POST=async(req)=>{
         await connect()
 
         const user=await userModel.findOne({email:email})
+        // chehck if user email exists in database first
+        if(!user){
+        return new NextResponse(JSON.stringify({msg:"invlaid credentials 1"}), {status:401})
+
+        }
         console.log("this is the user password" , user.password)
 
         // check if user password matches the one stored in the database
         if(password != user.password){
-        return new NextResponse(JSON.stringify({msg:"invlaid credentials"}), {status:401})
+        return new NextResponse(JSON.stringify({msg:"invlaid credentials 2"}), {status:401})
 
         }
         return new NextResponse(JSON.stringify({msg:"user loggedin successfully"}), {status:200})
